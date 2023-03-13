@@ -9,4 +9,5 @@ import Foundation
 
 struct Movie: Codable {
     //TODO: add properties
+    
 }
