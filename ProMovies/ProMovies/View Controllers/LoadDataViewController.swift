@@ -15,8 +15,11 @@ class LoadDataViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .primaryBackgroundColor
         callNM()
+        
+        var label = UILabel()
+        label.font = .systemFont(ofSize: 34, weight: .medium)
     }
     
     private func callNM() {
