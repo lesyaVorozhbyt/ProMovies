@@ -11,4 +11,6 @@ protocol MoviesNetworking {
     
     func fetchComingNowMovies(completion: @escaping (Response<[Movie]>) -> Void)
     func fetchComingSoonMovies(completion: @escaping (Response<[Movie]>) -> Void)
+    func fetchMovieById(_ id: String, completion: @escaping (Response<Movie>) -> Void)
+    
 }
