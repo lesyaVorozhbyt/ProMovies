@@ -19,7 +19,7 @@ enum MoviesAPI {
         case .comingSoon:
             return "/movie/upcoming"
         case let .movie(id):
-            return id
+            return "/movie/\(id)"
         }
     }
     //TODO: add logic to confirm query parameter
