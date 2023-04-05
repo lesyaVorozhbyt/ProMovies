@@ -16,6 +16,8 @@
 		04F5F57829BF9C5800D9DED9 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04F5F57729BF9C5800D9DED9 /* Home.storyboard */; };
 		04F5F57A29BF9C9100D9DED9 /* Favourites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04F5F57929BF9C9100D9DED9 /* Favourites.storyboard */; };
 		04F5F57C29BF9C9A00D9DED9 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04F5F57B29BF9C9A00D9DED9 /* Account.storyboard */; };
+		4584BB0F29DB2A9C00DB43F3 /* NowShowingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4584BB0D29DB2A9C00DB43F3 /* NowShowingTableViewCell.swift */; };
+		4584BB1029DB2A9C00DB43F3 /* NowShowingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4584BB0E29DB2A9C00DB43F3 /* NowShowingTableViewCell.xib */; };
 		52BC5BD229CCD6CA003D2E16 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BC5BD129CCD6CA003D2E16 /* HomeViewController.swift */; };
 		D1DCC57B29A7DCD900B7C096 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DCC57A29A7DCD900B7C096 /* AppDelegate.swift */; };
 		D1DCC57D29A7DCD900B7C096 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DCC57C29A7DCD900B7C096 /* SceneDelegate.swift */; };
@@ -38,6 +40,8 @@
 		04F5F57729BF9C5800D9DED9 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		04F5F57929BF9C9100D9DED9 /* Favourites.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favourites.storyboard; sourceTree = "<group>"; };
 		04F5F57B29BF9C9A00D9DED9 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
+		4584BB0D29DB2A9C00DB43F3 /* NowShowingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowShowingTableViewCell.swift; sourceTree = "<group>"; };
+		4584BB0E29DB2A9C00DB43F3 /* NowShowingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NowShowingTableViewCell.xib; sourceTree = "<group>"; };
 		52BC5BD129CCD6CA003D2E16 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D1DCC57729A7DCD900B7C096 /* ProMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1DCC57A29A7DCD900B7C096 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,9 +116,19 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		4584BB0C29DB2A5300DB43F3 /* NowShowingCell */ = {
+			isa = PBXGroup;
+			children = (
+				4584BB0D29DB2A9C00DB43F3 /* NowShowingTableViewCell.swift */,
+				4584BB0E29DB2A9C00DB43F3 /* NowShowingTableViewCell.xib */,
+			);
+			path = NowShowingCell;
+			sourceTree = "<group>";
+		};
 		52BC5BD029CCD695003D2E16 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				4584BB0C29DB2A5300DB43F3 /* NowShowingCell */,
 				52BC5BD129CCD6CA003D2E16 /* HomeViewController.swift */,
 			);
 			path = Home;
@@ -222,6 +236,7 @@
 			files = (
 				D1DCC58729A7DCDA00B7C096 /* LaunchScreen.storyboard in Resources */,
 				D1DCC58429A7DCDA00B7C096 /* Assets.xcassets in Resources */,
+				4584BB1029DB2A9C00DB43F3 /* NowShowingTableViewCell.xib in Resources */,
 				D1DCC58229A7DCD900B7C096 /* Main.storyboard in Resources */,
 				04F5F57829BF9C5800D9DED9 /* Home.storyboard in Resources */,
 				04F5F57C29BF9C9A00D9DED9 /* Account.storyboard in Resources */,
@@ -240,6 +255,7 @@
 				049EE2B729BFA6CE002BB355 /* MoviesNetworkManager.swift in Sources */,
 				049EE2B229BFA390002BB355 /* Movie.swift in Sources */,
 				049EE2AB29BFA18E002BB355 /* MoviesNetworking.swift in Sources */,
+				4584BB0F29DB2A9C00DB43F3 /* NowShowingTableViewCell.swift in Sources */,
 				D1DCC57F29A7DCD900B7C096 /* ViewController.swift in Sources */,
 				D1DCC57B29A7DCD900B7C096 /* AppDelegate.swift in Sources */,
 				049EE2B429BFA60E002BB355 /* Response.swift in Sources */,

@@ -7,17 +7,23 @@
 
 import UIKit
 
-class NowShowingTableViewCell: UITableViewCell {
+class NowShowingTableViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var durationLable: UILabel!
+    @IBOutlet weak var titleLable: UILabel!
+    @IBOutlet weak var genreLable: UILabel!
+    @IBOutlet weak var posterImage: UIImageView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        // Configure the view for the selected state
+//    }
     
 }
