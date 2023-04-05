@@ -116,7 +116,7 @@
                                 </cells>
                             </collectionView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lnz-gt-NYV">
-                                <rect key="frame" x="18" y="111" width="358" height="41"/>
+                                <rect key="frame" x="18" y="110" width="358" height="41"/>
                                 <color key="backgroundColor" name="primaryBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="3Jh-fR-BSW"/>
@@ -126,6 +126,9 @@
                                     <segment title="Second"/>
                                 </segments>
                                 <color key="selectedSegmentTintColor" name="segmentControlSelectedColor"/>
+                                <connections>
+                                    <action selector="nowShowingComingSoonSegmentOnButtonTouch:" destination="dUP-Bf-E5i" eventType="valueChanged" id="vPk-P4-9by"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eT0-56-Cc5"/>
@@ -143,6 +146,7 @@
                     <navigationItem key="navigationItem" id="bnW-TI-iGb"/>
                     <connections>
                         <outlet property="collectionView" destination="HNg-3W-Zlb" id="ppS-r3-URh"/>
+                        <outlet property="nowShowingComingSoonSegmentedControl" destination="lnz-gt-NYV" id="CfE-BH-FqP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EMI-q6-78n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

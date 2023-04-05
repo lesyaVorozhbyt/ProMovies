@@ -12,25 +12,24 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var nowShowingComingSoonSegmentedControl: UISegmentedControl!
+    
+    @IBAction func nowShowingComingSoonSegmentOnButtonTouch(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            fetchNowShowingMovies()
+        case 1:
+            fetchComingSoonMovies()
+        default:
+            break
+        }
+    }
+    
     var movies = [Movie]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
-
-        MoviesNetworkManager.shared.fetchComingNowMovies { [weak self] response in
-               switch response {
-               case .success(let movies):
-                   self?.movies = movies
-                   print("Success")
-                   DispatchQueue.main.async {
-                       self?.collectionView.reloadData()
-                   }
-               case .error(let errorMessage):
-                   print("Error message")
-               }
-           }
-        
         let layout = UICollectionViewFlowLayout()
                 layout.minimumInteritemSpacing = 10
                 collectionView.collectionViewLayout = layout
@@ -38,8 +37,39 @@ class HomeViewController: UIViewController {
         configCollectionView()
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Star Movie"
+        fetchNowShowingMovies()
+    }
+    
+    func fetchNowShowingMovies() {
+        MoviesNetworkManager.shared.fetchComingNowMovies { [weak self] response in
+            switch response {
+            case .success(let movies):
+                self?.movies = movies
+                print("Success")
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
+            case .error(_):
+                print("Error message")
+            }
+        }
     }
 
+    func fetchComingSoonMovies() {
+        MoviesNetworkManager.shared.fetchComingSoonMovies { [weak self] response in
+            switch response {
+            case .success(let movies):
+                self?.movies = movies
+                print("Success")
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
+            case .error(_):
+                print("Error message")
+            }
+        }
+    }
+    
     func configCollectionView(){
         
         collectionView.register(UINib(nibName: "NowShowingTableViewCell", bundle: nil), forCellWithReuseIdentifier: "NowShowingTableViewCell")
