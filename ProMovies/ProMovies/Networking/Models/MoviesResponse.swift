@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct MoviesResponse: Codable{
+    var results: [Movie]
+
+}

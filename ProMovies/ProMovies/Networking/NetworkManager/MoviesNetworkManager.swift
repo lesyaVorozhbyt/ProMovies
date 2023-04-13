@@ -34,8 +34,8 @@ class MoviesNetworkManager: MoviesNetworking {
             if statusCode <= 299 && statusCode >= 200 {
                 guard let data = data else { return }
                 let decoder = JSONDecoder()
-                guard let movies = try? decoder.decode([Movie].self, from: data) else { return }
-                completion(.success(movies))
+                guard let movies = try? decoder.decode(MoviesResponse.self, from: data) else { return }
+                completion(.success(movies.results))
             } else {
                 completion(.error("Sorry...again"))
             }

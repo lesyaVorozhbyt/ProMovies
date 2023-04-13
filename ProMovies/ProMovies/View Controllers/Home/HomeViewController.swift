@@ -37,6 +37,10 @@ class HomeViewController: UIViewController {
         configCollectionView()
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Star Movie"
+    
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
+        
         fetchNowShowingMovies()
     }
     
@@ -85,7 +89,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
          let cellWidth = collectionView.frame.width / 2 - 10
-         let cellHeight: CGFloat = 400
+         let cellHeight: CGFloat = 300
         
         
          return CGSize(width: cellWidth, height: cellHeight)
@@ -111,13 +115,17 @@ extension HomeViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         let movie = movies[indexPath.row]
-        let imageUrl = URL(string: movie.poster)
-        let imageData = try? Data(contentsOf: imageUrl!)
+        let imageUrl =  URL(string: "https://image.tmdb.org/t/p/w500//\(movie.poster)")!
+        let imageData = try? Data(contentsOf: imageUrl)
         cell.posterImage.image = UIImage(data: imageData!)
-        cell.titleLable.text = movie.name
-        return cell
+        
+//        let newSize = CGSize(width: 1000, height: 2000)
+//        cell.posterImage.image = cell.posterImage.image?.resized(to: newSize)
 
+        cell.titleLable.text = movie.title
+        return cell
     }
-    
-    
 }
+
+
+
