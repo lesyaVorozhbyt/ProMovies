@@ -44,6 +44,12 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleAspectFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nXz-vV-SLT" customClass="StarRatingView" customModule="ProMovies" customModuleProvider="target">
+                        <rect key="frame" x="3" y="295" width="167" height="28"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
@@ -61,10 +67,11 @@
             </tableViewCellContentView>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="durationLable" destination="veM-qu-z1C" id="jpy-Of-6r3"/>
-                <outlet property="genreLable" destination="We7-q6-gPv" id="dqM-V8-sJl"/>
+                <outlet property="durationLabel" destination="veM-qu-z1C" id="jpy-Of-6r3"/>
+                <outlet property="genreLabel" destination="We7-q6-gPv" id="dqM-V8-sJl"/>
                 <outlet property="posterImage" destination="hd4-Mn-0Y8" id="dn3-P0-5ml"/>
-                <outlet property="titleLable" destination="DfM-s7-ZTh" id="uZc-zd-oSO"/>
+                <outlet property="starRatingView" destination="nXz-vV-SLT" id="u1c-Gz-VkN"/>
+                <outlet property="titleLabel" destination="DfM-s7-ZTh" id="uZc-zd-oSO"/>
             </connections>
             <point key="canvasLocation" x="212.97709923664121" y="117.95774647887325"/>
         </tableViewCell>

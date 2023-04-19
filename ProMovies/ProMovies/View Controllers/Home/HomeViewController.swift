@@ -249,23 +249,23 @@ extension HomeViewController: UICollectionViewDataSource {
         let imageUrl =  URL(string: "https://image.tmdb.org/t/p/w500//\(movie.poster)")!
         let imageData = try? Data(contentsOf: imageUrl)
         cell.posterImage.image = UIImage(data: imageData!)
-        cell.titleLable.text = movie.title
+        cell.titleLabel.text = movie.title
 //        cell.genreLable.text = movie.genre
         // Використання функції для отримання назв жанрів з масиву цілих чисел
         if let genreIds = movies[indexPath.row].genreIds {
             let genreName = getGenreNames(for: genreIds, from: genres)
 //            let genreString = genreNames.joined(separator: ", ")
-            cell.genreLable.text = genreName
+            cell.genreLabel.text = genreName
         } else {
-            cell.genreLable.text = "Жанри невідомі"
+            cell.genreLabel.text = "Жанри невідомі"
         }
         
         if let duration = movieDurations[movie.id] {
-            cell.durationLable.text = "\u{00B7}\(duration/60)hr\(duration%60)m"
+            cell.durationLabel.text = "\u{00B7}\(duration/60)hr\(duration%60)m"
                 } else {
-                    cell.durationLable.text = "N/A"
+                    cell.durationLabel.text = "N/A"
                 }
-        
+        cell.configure(rating: (movie.vote_average * 10))
         
         return cell
     }

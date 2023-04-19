@@ -8,24 +8,20 @@
 import Foundation
 
 struct Movie: Codable {
-//    //TODO: add properties
-////    func encode(to encoder: Encoder) throws {
-////    }
-//    var poster_path: String
-//    var original_title: String
     var poster: String
     var title: String
     var genreIds: [Int]?
     var id: Int
-//    var duration: Int?
-////    var popularity: Int
+    var vote_average: Double
+    
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = try container.decode(String.self, forKey: .title)
         poster = try container.decode(String.self, forKey: .poster)
         genreIds = try container.decode([Int]?.self, forKey: .genreIds)
         id = try container.decode(Int.self, forKey: .id)
-//        duration = try container.decode(Int.self, forKey: .duration)
+        vote_average = try container.decode(Double.self, forKey: .vote_average)
 
     }
     
@@ -45,7 +41,7 @@ extension Movie {
         case title = "original_title"
         case genreIds = "genre_ids"
         case id = "id"
-//        case duration = "runtime"
+        case vote_average = "vote_average"
         }
 }
 
