@@ -17,21 +17,35 @@ class HomeViewController: UIViewController {
     @IBAction func nowShowingComingSoonSegmentOnButtonTouch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            fetchNowShowingMovies()
+            Task{
+                await fetchNowShowingMovies()
+                await updateMovieDurations(for: movies)
+            }
         case 1:
-            fetchComingSoonMovies()
+            Task{
+                await fetchComingSoonMovies()
+                await updateMovieDurations(for: movies)
+            }
         default:
             break
         }
     }
     
+    
+    
     var movies = [Movie]()
     var genres: [Int: String] = [:]
-    
+    var movieDurations: [Int: Int] = [:]
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
+        
+        self.navigationController?.tabBarController?.tabBar.barTintColor = UIColor(red: 15.0/255.0, green: 27.0/255.0, blue: 43.0/255.0, alpha: 1.0/255.0)
+        
+  
         fetchGenres()
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 10
@@ -42,37 +56,50 @@ class HomeViewController: UIViewController {
         configCollectionView()
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Star Movie"
-        fetchNowShowingMovies()
+        Task {
+            await fetchNowShowingMovies()
+            await updateMovieDurations(for: movies)
+        }
+        
+        
     }
     
-    func fetchNowShowingMovies() {
-        MoviesNetworkManager.shared.fetchComingNowMovies { [weak self] response in
-            switch response {
-            case .success(let movies):
-                self?.movies = movies
-                print("Success")
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
+    
+    
+    
+    
+    
+    func fetchNowShowingMovies() async {
+        await withCheckedContinuation { continuation in
+            MoviesNetworkManager.shared.fetchComingNowMovies { [weak self] response in
+                switch response {
+                case .success(let movies):
+                    self?.movies = movies
+                    print("Success")
+                case .error(_):
+                    print("Error message")
                 }
-            case .error(_):
-                print("Error message")
+                continuation.resume(returning: Void())
             }
         }
+        
+        
     }
 
-    func fetchComingSoonMovies() {
-        MoviesNetworkManager.shared.fetchComingSoonMovies { [weak self] response in
-            switch response {
-            case .success(let movies):
-                self?.movies = movies
-                print("Success")
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
+    func fetchComingSoonMovies() async {
+        await withCheckedContinuation { continuation in
+            MoviesNetworkManager.shared.fetchComingSoonMovies { [weak self] response in
+                switch response {
+                case .success(let movies):
+                    self?.movies = movies
+                    print("Success")
+                case .error(_):
+                    print("Error message")
                 }
-            case .error(_):
-                print("Error message")
+                continuation.resume(returning: Void())
             }
         }
+        
     }
     
     func configCollectionView(){
@@ -115,6 +142,8 @@ class HomeViewController: UIViewController {
         }
     }
     
+    
+    
     func getGenreNames( for genreIds: [Int], from genres: [Int:String]) -> String?{
         var genreNames: [String] = []
         for genreId in genreIds {
@@ -124,12 +153,69 @@ class HomeViewController: UIViewController {
         }
         return genreNames.first
     }
+    
+    func fetchMovieDuration(for movie: Movie, completion: @escaping (Result<Int, Error>) -> Void) {
+            guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie.id)?api_key=55957fcf3ba81b137f8fc01ac5a31fb5") else {
+                return completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+            }
+            let request = URLRequest(url: url)
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+                    completion(.failure(NSError(domain: "Invalid response", code: 0, userInfo: nil)))
+                    return
+                }
+                if statusCode <= 299 && statusCode >= 200 {
+                    guard let data = data else {
+                        completion(.failure(NSError(domain: "Invalid data", code: 0, userInfo: nil)))
+                        return
+                    }
+                    let decoder = JSONDecoder()
+                    guard let movieDetails = try? decoder.decode(MovieDetails.self, from: data) else {
+                        completion(.failure(NSError(domain: "Invalid data format", code: 0, userInfo: nil)))
+                        return
+                    }
+                    completion(.success(movieDetails.duration!))
+                } else {
+                    completion(.failure(NSError(domain: "Invalid status code", code: statusCode, userInfo: nil)))
+                }
+
+            }.resume()
+        }
+    
+    func updateMovieDurations(for movies: [Movie]) async {
+        await withCheckedContinuation { continuation in
+            var items = movies.count
+            for movie in movies {
+                fetchMovieDuration(for: movie) { result in
+                    switch result {
+                    case .success(let duration):
+                        DispatchQueue.main.async {
+                            self.movieDurations[movie.id] = duration // Update the movieDurations dictionary
+                        }
+                        
+                    case .failure(let error):
+                        print("Error fetching duration for movie \(movie.title): \(error.localizedDescription)")
+                    }
+                    items -= 1
+                    if items < 1 {
+                        DispatchQueue.main.async {
+                            self.collectionView.reloadData()
+                        }
+                        continuation.resume(returning: Void())
+                    }
+                }
+            }
+        }
+        
+    }
+    
  
 }
-
-
-
-
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -173,8 +259,17 @@ extension HomeViewController: UICollectionViewDataSource {
         } else {
             cell.genreLable.text = "Жанри невідомі"
         }
+        
+        if let duration = movieDurations[movie.id] {
+            cell.durationLable.text = "\u{00B7}\(duration/60)hr\(duration%60)m"
+                } else {
+                    cell.durationLable.text = "N/A"
+                }
+        
+        
         return cell
     }
+    
 }
 
 

@@ -170,10 +170,12 @@
         <!--Navigation Controller-->
         <scene sceneID="4F0-Tu-ltD">
             <objects>
-                <navigationController storyboardIdentifier="HomeInitialVC" id="42q-9u-OoZ" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Blt-gG-bAT">
+                <navigationController storyboardIdentifier="HomeInitialVC" toolbarHidden="NO" id="42q-9u-OoZ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" alpha="0.0" contentMode="scaleToFill" id="Blt-gG-bAT">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" name="primaryBackgroundColor"/>
                         <color key="barTintColor" red="0.058823529411764705" green="0.10588235294117647" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

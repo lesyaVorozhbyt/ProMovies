@@ -16,13 +16,16 @@ struct Movie: Codable {
     var poster: String
     var title: String
     var genreIds: [Int]?
-////    var duration: String
+    var id: Int
+//    var duration: Int?
 ////    var popularity: Int
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = try container.decode(String.self, forKey: .title)
         poster = try container.decode(String.self, forKey: .poster)
         genreIds = try container.decode([Int]?.self, forKey: .genreIds)
+        id = try container.decode(Int.self, forKey: .id)
+//        duration = try container.decode(Int.self, forKey: .duration)
 
     }
     
@@ -41,5 +44,18 @@ extension Movie {
         case poster = "poster_path"
         case title = "original_title"
         case genreIds = "genre_ids"
+        case id = "id"
+//        case duration = "runtime"
         }
+}
+
+
+struct MovieDetails: Codable {
+    var duration: Int?
+    var idDetails: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case duration = "runtime"
+        case idDetails = "id"
+    }
 }
