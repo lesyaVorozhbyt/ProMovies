@@ -27,11 +27,7 @@ struct Movie: Codable {
     
 }
 
-struct Genre: Codable{
-    var id: Int
-    var name: String
-    
-}
+
 
 
 
@@ -46,12 +42,4 @@ extension Movie {
 }
 
 
-struct MovieDetails: Codable {
-    var duration: Int?
-    var idDetails: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case duration = "runtime"
-        case idDetails = "id"
-    }
-}
+

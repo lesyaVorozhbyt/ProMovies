@@ -141,6 +141,16 @@
                                     <attributedString key="attributedTitle"/>
                                 </buttonConfiguration>
                             </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CfE-fk-faV">
+                                <rect key="frame" x="63" y="774" width="267" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Item" id="lDm-fI-3kx"/>
+                                    <barButtonItem title="Item" image="square.and.arrow.up.on.square" catalog="system" id="bpi-4t-pl5">
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eT0-56-Cc5"/>
                         <color key="backgroundColor" name="primaryBackgroundColor"/>
@@ -157,7 +167,9 @@
                             <constraint firstItem="VXn-pZ-IDj" firstAttribute="leading" secondItem="eT0-56-Cc5" secondAttribute="leading" constant="41" id="uIl-PD-Fwe"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="bnW-TI-iGb"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="zg4-iK-wyj"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="HNg-3W-Zlb" id="ppS-r3-URh"/>
                         <outlet property="nowShowingComingSoonSegmentedControl" destination="lnz-gt-NYV" id="CfE-BH-FqP"/>
@@ -170,7 +182,8 @@
         <!--Navigation Controller-->
         <scene sceneID="4F0-Tu-ltD">
             <objects>
-                <navigationController storyboardIdentifier="HomeInitialVC" toolbarHidden="NO" id="42q-9u-OoZ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="HomeInitialVC" id="42q-9u-OoZ" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" alpha="0.0" contentMode="scaleToFill" id="Blt-gG-bAT">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -203,6 +216,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="6dO-fr-1vu"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLw-cQ-Qhs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -211,6 +225,7 @@
     </scenes>
     <resources>
         <image name="play.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="square.and.arrow.up.on.square" catalog="system" width="119" height="128"/>
         <namedColor name="primaryBackgroundColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
