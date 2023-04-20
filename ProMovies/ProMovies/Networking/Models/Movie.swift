@@ -8,46 +8,18 @@
 import Foundation
 
 struct Movie: Codable {
-    var poster: String
-    var title: String
+    var posterPath: String?
+    var originalTitle: String?
     var genreIds: [Int]?
     var id: Int
-    var vote_average: Double
-    
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        title = try container.decode(String.self, forKey: .title)
-        poster = try container.decode(String.self, forKey: .poster)
-        genreIds = try container.decode([Int]?.self, forKey: .genreIds)
-        id = try container.decode(Int.self, forKey: .id)
-        vote_average = try container.decode(Double.self, forKey: .vote_average)
 
-    }
     
     let backdropPath: String?
-    var genres: [Genre]
-    let originalLanguage: String
+    let originalLanguage: String?
     var overview: String?
-    let posterPath: String?
-    let runtime: Int
-    let title: String
-    var voteAverage: Double
+    let runtime: Int?
+    let title: String?
+    var voteAverage: Double?
 }
-
-
-
-
-
-extension Movie {
-    enum CodingKeys: String, CodingKey {
-        case poster = "poster_path"
-        case title = "original_title"
-        case genreIds = "genre_ids"
-        case id = "id"
-        case vote_average = "vote_average"
-        }
-}
-
 
 

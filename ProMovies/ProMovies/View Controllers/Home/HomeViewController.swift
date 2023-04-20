@@ -46,8 +46,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
-        
-//        self.navigationController?.tabBarController?.tabBar.barTintColor = UIColor(red: 15.0/255.0, green: 27.0/255.0, blue: 43.0/255.0, alpha: 1.0/255.0)
+
         genres.fetchGenres()
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 10
@@ -74,7 +73,7 @@ class HomeViewController: UIViewController {
             MoviesNetworkManager.shared.fetchComingNowMovies { [weak self] response in
                 switch response {
                 case .success(let movies):
-                    self?.movies = movies
+                    self?.movies = movies.results
                     print("Success")
                 case .error(_):
                     print("Error message")
@@ -89,7 +88,7 @@ class HomeViewController: UIViewController {
             MoviesNetworkManager.shared.fetchComingSoonMovies { [weak self] response in
                 switch response {
                 case .success(let movies):
-                    self?.movies = movies
+                    self?.movies = movies.results
                     print("Success")
                 case .error(_):
                     print("Error message")
@@ -136,18 +135,16 @@ extension HomeViewController: UICollectionViewDataSource {
         }
         let movie = movies[indexPath.row]
         
-        
-        let imageUrl =  URL(string: "https://image.tmdb.org/t/p/w500//\(movie.poster)")!
-        let imageData = try? Data(contentsOf: imageUrl)
-        cell.posterImage.image = UIImage(data: imageData!)
+        if let posterPath = movie.posterPath ,
+           let imageUrl =  URL(string: "https://image.tmdb.org/t/p/w500//\(posterPath)"){
+            let imageData = try? Data(contentsOf: imageUrl)
+            cell.posterImage.image = UIImage(data: imageData!)
+        }
+      
         cell.titleLabel.text = movie.title
-//        cell.genreLable.text = movie.genre
-        // Використання функції для отримання назв жанрів з масиву цілих чисел
-        
         
         if let genreIds = movies[indexPath.row].genreIds {
             let genreName = genres.getGenreNames(for: genreIds, from: genres.genres)
-//            let genreString = genreNames.joined(separator: ", ")
             cell.genreLabel.text = genreName
         } else {
             cell.genreLabel.text = "Жанри невідомі"
@@ -158,7 +155,7 @@ extension HomeViewController: UICollectionViewDataSource {
                 } else {
                     cell.durationLabel.text = "N/A"
                 }
-        cell.configure(rating: (movie.vote_average * 10))
+        cell.configure(rating: ((movie.voteAverage ?? 0) * 10))
         
         return cell
     }

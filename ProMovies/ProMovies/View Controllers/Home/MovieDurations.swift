@@ -70,9 +70,6 @@ class MovieDurations{
                     }
                     items -= 1
                     if items < 1 {
-//                        DispatchQueue.main.async {
-//                            self.collectionView.reloadData()
-//                        }
                         continuation.resume(returning: Void())
                     }
                 }
