@@ -9,7 +9,7 @@ import UIKit
 
 class StarRatingView: UIView{
     
-    private let starSize: CGSize = CGSize(width: 20, height: 20)
+    private let starSize: CGSize = CGSize(width: 15, height: 15)
 
     private func createStarImageView() -> UIImageView {
         let imageView = UIImageView()
@@ -24,12 +24,12 @@ class StarRatingView: UIView{
     }
 
     func update(rating1: Double) {
-        var rat1: Double = rating1 / 20.0
+        let rat1: Double = rating1 / 20.0
         let starCount = Int(rat1.rounded())
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 2
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillProportionally
         stackView.alignment = .leading
         for _ in 1...5 {
             let starImageView = createStarImageView()

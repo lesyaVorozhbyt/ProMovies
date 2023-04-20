@@ -44,11 +44,14 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleAspectFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nXz-vV-SLT" customClass="StarRatingView" customModule="ProMovies" customModuleProvider="target">
-                        <rect key="frame" x="3" y="295" width="167" height="28"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="nXz-vV-SLT" customClass="StarRatingView" customModule="ProMovies" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="298" width="87" height="28"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="87" id="EV9-h9-CRf"/>
+                            <constraint firstAttribute="height" constant="28" id="d0b-xE-Rpb"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -62,7 +65,9 @@
                     <constraint firstItem="DfM-s7-ZTh" firstAttribute="leading" secondItem="hd4-Mn-0Y8" secondAttribute="leading" id="lLM-2z-Bxs"/>
                     <constraint firstItem="hd4-Mn-0Y8" firstAttribute="trailing" secondItem="DfM-s7-ZTh" secondAttribute="trailing" id="ls1-RF-Cep"/>
                     <constraint firstItem="hd4-Mn-0Y8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="nAg-Zb-S4Z"/>
+                    <constraint firstItem="nXz-vV-SLT" firstAttribute="leading" secondItem="hd4-Mn-0Y8" secondAttribute="leading" id="rIx-wc-Tea"/>
                     <constraint firstItem="DfM-s7-ZTh" firstAttribute="top" secondItem="hd4-Mn-0Y8" secondAttribute="bottom" constant="33" id="u4r-T3-YBc"/>
+                    <constraint firstItem="nXz-vV-SLT" firstAttribute="top" secondItem="hd4-Mn-0Y8" secondAttribute="bottom" constant="8" id="uq1-DU-99N"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
