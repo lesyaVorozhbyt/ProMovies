@@ -8,7 +8,6 @@
 import Foundation
 
 class MoviesNetworkManager: MoviesNetworking {
-    
     static let shared = MoviesNetworkManager()
     private let baseURL = "https://api.themoviedb.org/3"
     
@@ -19,9 +18,12 @@ class MoviesNetworkManager: MoviesNetworking {
     func fetchComingNowMovies(completion: @escaping (Response<[Movie]>) -> Void) {
         fetchRequest(MoviesAPI.comingNow, completion: completion)
     }
-
     
-    private func fetchRequest (_ moviesAPI: MoviesAPI, completion: @escaping (Response<[Movie]>) -> Void) {
+    func fetchVideos(moviesId: String, completion: @escaping (Response<[VideoResponse]>) -> Void) {
+        fetchRequest(MoviesAPI.video(movieId: moviesId), completion: completion)
+    }
+    
+    private func fetchRequest <T: Codable> (_ moviesAPI: MoviesAPI, completion: @escaping (Response<T>) -> Void) {
         guard let url = URL(string: "\(baseURL)\(moviesAPI.pass)\(moviesAPI.queryParameters)") else { return }
         let request = URLRequest(url: url)
         
@@ -34,8 +36,8 @@ class MoviesNetworkManager: MoviesNetworking {
             if statusCode <= 299 && statusCode >= 200 {
                 guard let data = data else { return }
                 let decoder = JSONDecoder()
-                guard let movies = try? decoder.decode([Movie].self, from: data) else { return }
-                completion(.success(movies))
+                guard let items = try? decoder.decode(T.self, from: data) else { return }
+                completion(.success(items))
             } else {
                 completion(.error("Sorry...again"))
             }

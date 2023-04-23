@@ -10,13 +10,16 @@ import Foundation
 enum MoviesAPI {
     case comingNow
     case comingSoon
-    
+    case video (movieId: String)
+    //MARK: check movieID
     var pass: String {
         switch self {
         case .comingNow:
             return "/movie/now_playing"
         case .comingSoon:
             return "/movie/upcoming"
+        case let .video(id):
+            return "/movie/980078/videos"
         }
     }
     //TODO: add logic to confirm query parameter
