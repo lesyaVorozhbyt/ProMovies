@@ -19,10 +19,6 @@ class MoviesNetworkManager: MoviesNetworking {
         fetchRequest(MoviesAPI.comingNow, completion: completion)
     }
     
-    func fetchVideos(moviesId: String, completion: @escaping (Response<[VideoResponse]>) -> Void) {
-        fetchRequest(MoviesAPI.video(movieId: moviesId), completion: completion)
-    }
-    
     private func fetchRequest <T: Codable> (_ moviesAPI: MoviesAPI, completion: @escaping (Response<T>) -> Void) {
         guard let url = URL(string: "\(baseURL)\(moviesAPI.pass)\(moviesAPI.queryParameters)") else { return }
         let request = URLRequest(url: url)

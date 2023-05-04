@@ -6,26 +6,18 @@
 //
 
 import UIKit
-import AVKit
+import WebKit
 
 class VideoTableViewCell: UITableViewCell {
-    
+    @IBOutlet weak var playVideoWebKit: WKWebView!
     
     static let identifier = "VideoCell"
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
+    var key: String?
     
+    func playVideo() {
+        guard let key = self.key else { return }
+        guard var url = URL(string: "https://www.themoviedb.org/video/play?key=\(key)&width=990&height=630&_=1682418478611") else { return }
+        playVideoWebKit?.load(URLRequest.init(url: url))
+    }
 }

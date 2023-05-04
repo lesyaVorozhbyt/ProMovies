@@ -7,15 +7,15 @@
 
 import UIKit
 struct VideoResponse: Codable {
-    let id: Int
-    let results: [Video]
+    var id: Int
+    var results: [Video]
 }
 
 struct Video: Codable {
-    let name: String
-    let key: String
-    let site: String
-    let id: String
+    var name: String
+    var key: String
+    var site: String
+    var id: String
 }
 
 
