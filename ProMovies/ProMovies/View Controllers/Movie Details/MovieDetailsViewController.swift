@@ -9,6 +9,9 @@ import UIKit
 
 class MovieDetailsViewController: UIViewController {
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var castTableView: UITableView!
+    @IBOutlet weak var reviewsTableView: UITableView!
     @IBOutlet weak var mainMovieImage: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
@@ -16,25 +19,29 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var synopsisDescription: UILabel!
     
+    @IBOutlet weak var reviewsCount: UILabel!
+    
     @IBOutlet weak var synopsisView: UIView!
     @IBOutlet weak var blurBackgroundImage: UIImageView!
     @IBOutlet weak var segmaentControlMovie: UISegmentedControl!
     @IBOutlet var starRatingCollection: [UIImageView]!
+    
     var movieId: String = "458156"
     var movie: Movie?
-    
-    let image = UIImage(named: "randonImage")
-    
+    var castAndCrew: CastAndCrewMembers?
+    var reviews: Reviews?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        callNM()
-        //updateUI()
-        // Do any additional setup after loading the view.
+        configTableAndScroll()
+        uploadMovie()
+        uploadCastAndCrew()
+        uploadReviews()
+        print(reviews)
     }
 
     
-    private func callNM() {
+    private func uploadMovie() {
         MoviesNetworkManager.shared.fetchMovieById(movieId, completion: { [weak self] response in
             guard let self = self else { return }
             switch response {
@@ -48,6 +55,48 @@ class MovieDetailsViewController: UIViewController {
             }
         })
     }
+    
+    private func uploadCastAndCrew() {
+        MoviesNetworkManager.shared.fetchCastAndCrewForMovie(movieId) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case let .success(castAndCrew):
+                self.castAndCrew = castAndCrew
+                DispatchQueue.main.async {
+                    self.castTableView.reloadData()
+                }
+            case .error:
+                print("ooops")
+            }
+        }
+    }
+    
+    private func uploadReviews() {
+        MoviesNetworkManager.shared.fetchReviewsForMovie(movieId) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case let .success(reviews):
+                self.reviews = reviews
+                DispatchQueue.main.async {
+                    self.reviewsTableView.reloadData()
+                }
+            case .error:
+                print("oops")
+            }
+        }
+    }
+    
+    private func configTableAndScroll() {
+        castTableView.delegate = self
+        castTableView.dataSource = self
+        castTableView.backgroundColor = .clear
+        
+        castTableView.register(UINib(nibName: "CastTableViewCell", bundle: nil), forCellReuseIdentifier: "CastTableViewCell")
+        
+        castTableView.rowHeight = 67
+        scrollView.delegate = self
+    }
+
     
     private func updateUI() {
         guard let movie = movie else { return }
@@ -73,8 +122,8 @@ class MovieDetailsViewController: UIViewController {
         blurEffectView.alpha = 0.9
         blurBackgroundImage.contentMode = .scaleAspectFill
         blurBackgroundImage.addSubview(blurEffectView)
-        let selectedStateSC: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white]
-        let normalStateSC: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white.withAlphaComponent(0.5)]
+        let selectedStateSC: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.solidTextColor]
+        let normalStateSC: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.opacity50TextColor]
         
         movieTitle.text = movie.title
         
@@ -99,13 +148,34 @@ class MovieDetailsViewController: UIViewController {
         }
         
         synopsisDescription.text = movie.overview
-        
-        
-        
         segmaentControlMovie.setTitleTextAttributes(selectedStateSC, for: .selected)
         segmaentControlMovie.setTitleTextAttributes(normalStateSC, for: .normal)
+        
+        reviewsCount.text = "\(reviews?.totalResults ?? 0) Reviews"
+        reviewsCount.textColor = UIColor.opacity50TextColor
+        reviewsCount.font = UIFont.header3(weight: .regular)
     }
-
+    
+    @IBAction func segmentControllChanged(_ sender: Any) {
+        switch segmaentControlMovie.selectedSegmentIndex {
+        case 0:
+            synopsisView.isHidden = false
+            castTableView.isHidden = false
+            reviewsTableView.isHidden = true
+            reviewsCount.isHidden = true
+        case 1:
+            reviewsTableView.isHidden = false
+            synopsisView.isHidden = true
+            castTableView.isHidden = true
+            reviewsCount.isHidden = false
+        default:
+            reviewsTableView.isHidden = true
+            synopsisView.isHidden = true
+            castTableView.isHidden = true
+            reviewsCount.isHidden = true
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -116,4 +186,17 @@ class MovieDetailsViewController: UIViewController {
     }
     */
 
+    @objc func buttonAction(sender: UIButton!) {
+        let btnsendtag: UIButton = sender
+        if btnsendtag.tag == 1 {
+            performSegue(withIdentifier: "toCastAndCrew", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let castAndCrewVC = segue.destination as? CastAndCrewViewController, segue.identifier == "toCastAndCrew" {
+            castAndCrewVC.castAndCrew = castAndCrew
+        }
+    }
 }
+
