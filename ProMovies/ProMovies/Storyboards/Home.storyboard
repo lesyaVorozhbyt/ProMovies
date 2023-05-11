@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -94,52 +95,85 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HNg-3W-Zlb">
-                                <rect key="frame" x="0.0" y="151" width="393" height="667"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fsw-kA-Oxv">
-                                    <size key="itemSize" width="128" height="128"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HNg-3W-Zlb">
+                                <rect key="frame" x="29" y="120" width="28" height="22"/>
+                                <color key="backgroundColor" name="primaryBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fsw-kA-Oxv">
+                                    <size key="itemSize" width="176" height="400"/>
+                                    <size key="estimatedItemSize" width="176" height="400"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="o6w-bQ-swN">
-                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <rect key="frame" x="-81" y="0.0" width="190" height="370"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ef8-d1-vcx">
-                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="190" height="370"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
+                                        <size key="customSize" width="190" height="370"/>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lnz-gt-NYV">
                                 <rect key="frame" x="18" y="111" width="358" height="41"/>
-                                <color key="backgroundColor" name="primaryBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="3Jh-fR-BSW"/>
                                 </constraints>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
+                                    <segment title="Now Showing"/>
+                                    <segment title="Coming Soon"/>
                                 </segments>
                                 <color key="selectedSegmentTintColor" name="segmentControlSelectedColor"/>
+                                <connections>
+                                    <action selector="nowShowingComingSoonSegmentOnButtonTouch:" destination="dUP-Bf-E5i" eventType="valueChanged" id="vPk-P4-9by"/>
+                                </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXn-pZ-IDj">
+                                <rect key="frame" x="41" y="113.99999999999999" width="24" height="34.333333333333329"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled">
+                                    <imageReference key="image" image="play.circle.fill" catalog="system" symbolScale="small"/>
+                                    <attributedString key="attributedTitle"/>
+                                </buttonConfiguration>
+                            </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CfE-fk-faV">
+                                <rect key="frame" x="63" y="774" width="267" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Item" id="lDm-fI-3kx"/>
+                                    <barButtonItem title="Item" image="square.and.arrow.up.on.square" catalog="system" id="bpi-4t-pl5">
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eT0-56-Cc5"/>
                         <color key="backgroundColor" name="primaryBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="eT0-56-Cc5" firstAttribute="trailing" secondItem="VXn-pZ-IDj" secondAttribute="trailing" constant="328" id="0dX-l4-R31"/>
                             <constraint firstItem="HNg-3W-Zlb" firstAttribute="top" secondItem="lnz-gt-NYV" secondAttribute="bottom" id="2Lw-t8-FxY"/>
-                            <constraint firstItem="eT0-56-Cc5" firstAttribute="trailing" secondItem="HNg-3W-Zlb" secondAttribute="trailing" id="BTs-wT-6sb"/>
+                            <constraint firstItem="eT0-56-Cc5" firstAttribute="trailing" secondItem="HNg-3W-Zlb" secondAttribute="trailing" constant="15" id="BTs-wT-6sb"/>
                             <constraint firstItem="eT0-56-Cc5" firstAttribute="trailing" secondItem="lnz-gt-NYV" secondAttribute="trailing" constant="17" id="Hwh-cS-jfj"/>
                             <constraint firstItem="lnz-gt-NYV" firstAttribute="leading" secondItem="eT0-56-Cc5" secondAttribute="leading" constant="18" id="W6M-0p-W97"/>
+                            <constraint firstItem="VXn-pZ-IDj" firstAttribute="top" secondItem="eT0-56-Cc5" secondAttribute="top" constant="11" id="d9O-Jk-uji"/>
                             <constraint firstItem="lnz-gt-NYV" firstAttribute="top" secondItem="eT0-56-Cc5" secondAttribute="top" constant="8" id="gSz-9B-lMa"/>
-                            <constraint firstItem="HNg-3W-Zlb" firstAttribute="leading" secondItem="eT0-56-Cc5" secondAttribute="leading" id="kPP-RQ-QlA"/>
+                            <constraint firstItem="HNg-3W-Zlb" firstAttribute="leading" secondItem="eT0-56-Cc5" secondAttribute="leading" constant="15" id="kPP-RQ-QlA"/>
                             <constraint firstItem="eT0-56-Cc5" firstAttribute="bottom" secondItem="HNg-3W-Zlb" secondAttribute="bottom" id="kkf-4r-QkT"/>
+                            <constraint firstItem="VXn-pZ-IDj" firstAttribute="leading" secondItem="eT0-56-Cc5" secondAttribute="leading" constant="41" id="uIl-PD-Fwe"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="bnW-TI-iGb"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="zg4-iK-wyj"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="HNg-3W-Zlb" id="ppS-r3-URh"/>
+                        <outlet property="nowShowingComingSoonSegmentedControl" destination="lnz-gt-NYV" id="CfE-BH-FqP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EMI-q6-78n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -149,9 +183,19 @@
         <scene sceneID="4F0-Tu-ltD">
             <objects>
                 <navigationController storyboardIdentifier="HomeInitialVC" id="42q-9u-OoZ" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Blt-gG-bAT">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" alpha="0.0" contentMode="scaleToFill" id="Blt-gG-bAT">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" name="primaryBackgroundColor"/>
+                        <color key="barTintColor" red="0.058823529411764705" green="0.10588235294117647" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="dUP-Bf-E5i" kind="relationship" relationship="rootViewController" id="MC3-sH-SAJ"/>
@@ -172,6 +216,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="6dO-fr-1vu"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLw-cQ-Qhs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -179,6 +224,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="play.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="square.and.arrow.up.on.square" catalog="system" width="119" height="128"/>
         <namedColor name="primaryBackgroundColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
