@@ -8,6 +8,12 @@
 import Foundation
 
 struct Movie: Codable {
-    //TODO: add properties
-    
+    let backdropPath: String?
+    var genres: [Genre]
+    let originalLanguage: String
+    var overview: String?
+    let posterPath: String?
+    let runtime: Int
+    let title: String
+    var voteAverage: Double
 }

@@ -19,7 +19,12 @@ class MoviesNetworkManager: MoviesNetworking {
         fetchRequest(MoviesAPI.comingNow, completion: completion)
     }
     
-    private func fetchRequest <T: Codable> (_ moviesAPI: MoviesAPI, completion: @escaping (Response<T>) -> Void) {
+    func fetchMovieById (_ id: String, completion: @escaping (Response<Movie>) -> Void) {
+        fetchRequest(MoviesAPI.movie(id), completion: completion)
+    }
+
+    
+    private func fetchRequest<T: Codable> (_ moviesAPI: MoviesAPI, completion: @escaping (Response<T>) -> Void) {
         guard let url = URL(string: "\(baseURL)\(moviesAPI.pass)\(moviesAPI.queryParameters)") else { return }
         let request = URLRequest(url: url)
         
@@ -32,6 +37,7 @@ class MoviesNetworkManager: MoviesNetworking {
             if statusCode <= 299 && statusCode >= 200 {
                 guard let data = data else { return }
                 let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 guard let items = try? decoder.decode(T.self, from: data) else { return }
                 completion(.success(items))
             } else {
