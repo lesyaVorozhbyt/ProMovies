@@ -23,7 +23,14 @@ class MoviesNetworkManager: MoviesNetworking {
     func fetchMovieById (_ id: String, completion: @escaping (Response<Movie>) -> Void) {
         fetchRequest(MoviesAPI.movie(id), completion: completion)
     }
-
+    
+    func fetchCastAndCrewForMovie(_ id: String, completion: @escaping (Response<CastAndCrewMembers>) -> Void) {
+        fetchRequest(MoviesAPI.castAndCrew(id), completion: completion)
+    }
+    
+    func fetchReviewsForMovie(_ id: String, completion: @escaping (Response<Reviews>) -> Void) {
+        fetchRequest(MoviesAPI.reviews(id), completion: completion)
+    }
     
     private func fetchRequest<T: Codable> (_ moviesAPI: MoviesAPI, completion: @escaping (Response<T>) -> Void) {
         guard let url = URL(string: "\(baseURL)\(moviesAPI.pass)\(moviesAPI.queryParameters)") else { return }
