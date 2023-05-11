@@ -12,11 +12,11 @@ class MoviesNetworkManager: MoviesNetworking {
     static let shared = MoviesNetworkManager()
     private let baseURL = "https://api.themoviedb.org/3"
     
-    func fetchComingSoonMovies(completion: @escaping (Response<[Movie]>) -> Void) {
+    func fetchComingSoonMovies(completion: @escaping (Response<MoviesResponse>) -> Void) {
         fetchRequest(MoviesAPI.comingSoon, completion: completion)
     }
     
-    func fetchComingNowMovies(completion: @escaping (Response<[Movie]>) -> Void) {
+    func fetchComingNowMovies(completion: @escaping (Response<MoviesResponse>) -> Void) {
         fetchRequest(MoviesAPI.comingNow, completion: completion)
     }
     
@@ -37,7 +37,7 @@ class MoviesNetworkManager: MoviesNetworking {
         let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
+            if error != nil {
                 completion(.error("Sorry..."))
                 return
             }
@@ -46,7 +46,9 @@ class MoviesNetworkManager: MoviesNetworking {
                 guard let data = data else { return }
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                guard let items = try? decoder.decode(T.self, from: data) else { return }
+                guard let items = try? decoder.decode(T.self, from: data) else {
+                    completion(.error("Sorry...can't pass"))
+                    return }
                 completion(.success(items))
             } else {
                 completion(.error("Sorry...again"))
@@ -54,5 +56,7 @@ class MoviesNetworkManager: MoviesNetworking {
 
         }.resume()
     }
+    
+    
 }
 

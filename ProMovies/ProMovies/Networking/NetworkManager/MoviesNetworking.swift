@@ -8,8 +8,10 @@
 import Foundation
 
 protocol MoviesNetworking {
-    func fetchComingNowMovies(completion: @escaping (Response<[Movie]>) -> Void)
-    func fetchComingSoonMovies(completion: @escaping (Response<[Movie]>) -> Void)
+    func fetchComingNowMovies(completion: @escaping (Response<MoviesResponse>) -> Void)
+    
+    func fetchComingSoonMovies(completion: @escaping (Response<MoviesResponse>) -> Void)
+    
     func fetchMovieById(_ id: String, completion: @escaping (Response<Movie>) -> Void)
     func fetchCastAndCrewForMovie(_ id: String, completion: @escaping (Response<CastAndCrewMembers>) -> Void)
     func fetchReviewsForMovie(_ id: String, completion: @escaping (Response<Reviews>) -> Void)

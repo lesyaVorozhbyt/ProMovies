@@ -127,14 +127,14 @@ class MovieDetailsViewController: UIViewController {
         
         movieTitle.text = movie.title
         
-        let hours = (movie.runtime)/60
-        let minutes = movie.runtime - hours*60
+        let hours = (movie.runtime ?? 0)/60
+        let minutes = (movie.runtime ?? 0) - hours*60
         durationLabel.text = "\(hours)hr \(minutes)m"
         
-        let genres = movie.genres.map { $0.name }.joined(separator: ", ")
-        genresLabel.text = genres
+//        let genres = movie.genres.map { $0.name }.joined(separator: ", ")
+//        genresLabel.text = genres
         
-        let rating = round(movie.voteAverage/2 * 10) / 10.0
+        let rating = round((movie.voteAverage ?? 0)/2 * 10) / 10.0
         ratingLabel.text = "\(rating)/5"
         
         let floorRating = floor(rating)
