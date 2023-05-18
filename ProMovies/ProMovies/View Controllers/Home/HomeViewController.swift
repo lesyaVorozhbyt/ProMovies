@@ -160,6 +160,16 @@ extension HomeViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieDetailsSB = UIStoryboard(name: "MovieViewer", bundle: nil)
+        if let movieDetailsVC = movieDetailsSB.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
+            movieDetailsVC.movieId = String(movies[indexPath.row].id)
+            navigationController?.pushViewController(movieDetailsVC, animated: true)
+            
+        }
+        
+    }
+    
 }
 
 

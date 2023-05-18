@@ -26,7 +26,7 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var segmaentControlMovie: UISegmentedControl!
     @IBOutlet var starRatingCollection: [UIImageView]!
     
-    var movieId: String = "458156"
+    var movieId: String?
     var movie: Movie?
     var castAndCrew: CastAndCrewMembers?
     var reviews: Reviews?
@@ -42,7 +42,7 @@ class MovieDetailsViewController: UIViewController {
 
     
     private func uploadMovie() {
-        MoviesNetworkManager.shared.fetchMovieById(movieId, completion: { [weak self] response in
+        MoviesNetworkManager.shared.fetchMovieById(movieId ?? "", completion: { [weak self] response in
             guard let self = self else { return }
             switch response {
             case let .success(movie):
@@ -57,7 +57,7 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func uploadCastAndCrew() {
-        MoviesNetworkManager.shared.fetchCastAndCrewForMovie(movieId) { [weak self] response in
+        MoviesNetworkManager.shared.fetchCastAndCrewForMovie(movieId ?? "") { [weak self] response in
             guard let self = self else { return }
             switch response {
             case let .success(castAndCrew):
@@ -72,7 +72,7 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func uploadReviews() {
-        MoviesNetworkManager.shared.fetchReviewsForMovie(movieId) { [weak self] response in
+        MoviesNetworkManager.shared.fetchReviewsForMovie(movieId ?? "") { [weak self] response in
             guard let self = self else { return }
             switch response {
             case let .success(reviews):
