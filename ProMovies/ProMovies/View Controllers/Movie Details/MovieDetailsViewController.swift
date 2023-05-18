@@ -127,9 +127,9 @@ class MovieDetailsViewController: UIViewController {
         
         movieTitle.text = movie.title
         
-        let hours = (movie.runtime ?? 0)/60
-        let minutes = (movie.runtime ?? 0) - hours*60
-        durationLabel.text = "\(hours)hr \(minutes)m"
+//        let hours = (movie.runtime ?? 0)/60
+//        let minutes = (movie.runtime ?? 0) - hours*60
+        durationLabel.text = "\(movie.runtime ?? 0 / 60)hr \(movie.runtime ?? 0 % 60)m"
         
 //        let genres = movie.genres.map { $0.name }.joined(separator: ", ")
 //        genresLabel.text = genres
