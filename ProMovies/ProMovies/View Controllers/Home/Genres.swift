@@ -7,14 +7,6 @@
 
 import UIKit
 
-
-struct Genre: Codable{
-    var id: Int
-    var name: String
-    
-}
-
-
 class Genres {
     
     var genres: [Int: String] = [:]

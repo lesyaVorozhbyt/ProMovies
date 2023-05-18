@@ -8,7 +8,6 @@
 import Foundation
 
 class MoviesNetworkManager: MoviesNetworking {
-    
     static let shared = MoviesNetworkManager()
     private let baseURL = "https://api.themoviedb.org/3"
     

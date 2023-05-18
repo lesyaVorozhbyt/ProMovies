@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dD5-pP-Jce">
-                                <rect key="frame" x="0.0" y="769" width="393" height="49"/>
+                                <rect key="frame" x="-1" y="767" width="392" height="48"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
@@ -57,8 +57,9 @@
                     </tabBar>
                     <connections>
                         <segue destination="6nG-CU-blE" kind="relationship" relationship="viewControllers" id="urz-7w-Lac"/>
-                        <segue destination="lzY-G8-jVo" kind="relationship" relationship="viewControllers" id="Mcw-Ca-v9N"/>
                         <segue destination="n8v-lY-5HY" kind="relationship" relationship="viewControllers" id="YMe-Do-jB8"/>
+                        <segue destination="lzY-G8-jVo" kind="relationship" relationship="viewControllers" id="YAl-sy-vOA"/>
+                        <segue destination="EWK-Yj-naW" kind="relationship" relationship="viewControllers" id="TUP-90-nry"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6IB-MC-xmb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -83,7 +84,17 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KBW-oo-IJY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1687" y="-214"/>
+            <point key="canvasLocation" x="1603" y="-201"/>
+        </scene>
+        <!--MovieDetails-->
+        <scene sceneID="Rhg-hc-2lX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MovieDetails" id="EWK-Yj-naW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="lOS-z1-rcz"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TVf-9t-r6G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1602" y="-144"/>
         </scene>
         <!--Account-->
         <scene sceneID="ymv-Pg-2ph">
@@ -100,10 +111,10 @@
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="square.and.arrow.up.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="primaryBackgroundColor">
-            <color red="0.058823525905609131" green="0.10588234663009644" blue="0.16862747073173523" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tintColor">
-            <color red="0.27843137254901962" green="0.81176470588235294" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.27799999713897705" green="0.81199997663497925" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
