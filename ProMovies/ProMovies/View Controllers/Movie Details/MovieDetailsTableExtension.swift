@@ -62,16 +62,6 @@ extension MovieDetailsViewController: UITableViewDataSource {
         
         button.addTarget(self, action: #selector(buttonAction), for: .touchDown)
         
-//        NSLayoutConstraint.activate([
-//            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//
-//            button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//            button.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            button.widthAnchor.constraint(equalToConstant: 70),
-//            button.heightAnchor.constraint(equalToConstant: 18)
-//        ])
-        
         return view
     }
     

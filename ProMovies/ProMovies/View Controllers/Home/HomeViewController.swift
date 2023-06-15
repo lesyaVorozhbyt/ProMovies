@@ -167,7 +167,6 @@ extension HomeViewController: UICollectionViewDataSource {
             navigationController?.pushViewController(movieDetailsVC, animated: true)
             
         }
-        
     }
     
 }

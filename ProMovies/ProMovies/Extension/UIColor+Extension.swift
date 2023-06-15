@@ -43,4 +43,10 @@ extension UIColor {
             UIColor(named: "starsColor") ?? .yellow
         }
     }
+    
+    class var redAccentColor: UIColor {
+        get {
+            UIColor(named: "redAccentColor") ?? .red
+        }
+    }
 }

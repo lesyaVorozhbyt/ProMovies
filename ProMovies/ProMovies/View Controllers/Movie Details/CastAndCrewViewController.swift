@@ -135,11 +135,9 @@ extension CastAndCrewViewController: UITableViewDataSource {
                 self.profilePhotos[i].append(UIImage())
                 //TODO: -add placeholder image
                 queue.async {
-                    print("smth2")
                     if let data = try? Data(contentsOf: self.photosUrls[i][j]) {
                         DispatchQueue.main.async { [weak self] in
                             guard let self = self else { return }
-                            print("i = \(i), j= \(j)")
                             self.profilePhotos[i][j] = UIImage(data: data) ?? UIImage()
                             self.tableView.reloadRows(at: [IndexPath(row: j, section: i)], with: .none)
                         }

@@ -11,7 +11,6 @@ class MovieDetailsViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var castTableView: UITableView!
-    @IBOutlet weak var reviewsTableView: UITableView!
     @IBOutlet weak var mainMovieImage: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
@@ -19,71 +18,78 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var synopsisDescription: UILabel!
     
-    @IBOutlet weak var reviewsCount: UILabel!
-    
+    @IBOutlet weak var videosCollectionView: UICollectionView!
     @IBOutlet weak var synopsisView: UIView!
     @IBOutlet weak var blurBackgroundImage: UIImageView!
     @IBOutlet weak var segmaentControlMovie: UISegmentedControl!
     @IBOutlet var starRatingCollection: [UIImageView]!
     
-    var movieId: String?
+    var movieId: String? {
+        didSet {
+            uploadMovie()
+            uploadCastAndCrew()
+            uploadVideos()
+        }
+    }
     var movie: Movie?
     var castAndCrew: CastAndCrewMembers?
     var reviews: Reviews?
+    var videos = [Video]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configTableAndScroll()
-        uploadMovie()
-        uploadCastAndCrew()
-        uploadReviews()
-        print(reviews)
+        configCollection()
     }
 
     
     private func uploadMovie() {
-        MoviesNetworkManager.shared.fetchMovieById(movieId ?? "", completion: { [weak self] response in
-            guard let self = self else { return }
-            switch response {
-            case let .success(movie):
-                self.movie = movie
-                DispatchQueue.main.async {
-                    self.updateUI()
+        if let movieId = movieId {
+            MoviesNetworkManager.shared.fetchMovieById(movieId, completion: { [weak self] response in
+                guard let self = self else { return }
+                switch response {
+                case let .success(movie):
+                    self.movie = movie
+                    DispatchQueue.main.async {
+                        self.updateUI()
+                    }
+                case .error:
+                    print("oooops")
                 }
-            case .error:
-                print("oooops")
-            }
-        })
+            })
+        }
     }
     
     private func uploadCastAndCrew() {
-        MoviesNetworkManager.shared.fetchCastAndCrewForMovie(movieId ?? "") { [weak self] response in
-            guard let self = self else { return }
+        if let movieId = movieId {
+            MoviesNetworkManager.shared.fetchCastAndCrewForMovie(movieId) { [weak self] response in
+                guard let self = self else { return }
+                switch response {
+                case let .success(castAndCrew):
+                    self.castAndCrew = castAndCrew
+                    DispatchQueue.main.async {
+                        self.castTableView.reloadData()
+                    }
+                case .error:
+                    print("ooops")
+                }
+            }
+        }
+    }
+    
+    private func uploadVideos() {
+        VideoNetworkManager.shared.fetchRequest(movieid: movieId ?? "", completion: { [weak self] response in
+                guard let self = self else {return}
             switch response {
-            case let .success(castAndCrew):
-                self.castAndCrew = castAndCrew
+            case let .success(items):
+                self.videos = items.results
                 DispatchQueue.main.async {
-                    self.castTableView.reloadData()
+                    self.videosCollectionView.reloadData()
                 }
             case .error:
                 print("ooops")
             }
-        }
-    }
-    
-    private func uploadReviews() {
-        MoviesNetworkManager.shared.fetchReviewsForMovie(movieId ?? "") { [weak self] response in
-            guard let self = self else { return }
-            switch response {
-            case let .success(reviews):
-                self.reviews = reviews
-                DispatchQueue.main.async {
-                    self.reviewsTableView.reloadData()
-                }
-            case .error:
-                print("oops")
-            }
-        }
+        })
     }
     
     private func configTableAndScroll() {
@@ -95,6 +101,16 @@ class MovieDetailsViewController: UIViewController {
         
         castTableView.rowHeight = 67
         scrollView.delegate = self
+    }
+    
+    private func configCollection() {
+        videosCollectionView.delegate = self
+        videosCollectionView.dataSource = self
+        
+        videosCollectionView.backgroundColor = .clear
+        
+        videosCollectionView.register(UINib(nibName: "VideoCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "VideoCollectionViewCell")
+        videosCollectionView.register(UINib(nibName: "CollectionHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionHeaderView")
     }
 
     
@@ -126,13 +142,13 @@ class MovieDetailsViewController: UIViewController {
         let normalStateSC: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.opacity50TextColor]
         
         movieTitle.text = movie.title
+        durationLabel.text = "\((movie.runtime ?? 0) / 60)hr \((movie.runtime ?? 0) % 60)m"
         
-//        let hours = (movie.runtime ?? 0)/60
-//        let minutes = (movie.runtime ?? 0) - hours*60
-        durationLabel.text = "\(movie.runtime ?? 0 / 60)hr \(movie.runtime ?? 0 % 60)m"
+//        if let genres = movie.genreIds {
+//            genresLabel.text = genres.map({ String($0) }).joined(separator: ", ")
+//        }
         
-//        let genres = movie.genres.map { $0.name }.joined(separator: ", ")
-//        genresLabel.text = genres
+        
         
         let rating = round((movie.voteAverage ?? 0)/2 * 10) / 10.0
         ratingLabel.text = "\(rating)/5"
@@ -151,9 +167,7 @@ class MovieDetailsViewController: UIViewController {
         segmaentControlMovie.setTitleTextAttributes(selectedStateSC, for: .selected)
         segmaentControlMovie.setTitleTextAttributes(normalStateSC, for: .normal)
         
-        reviewsCount.text = "\(reviews?.totalResults ?? 0) Reviews"
-        reviewsCount.textColor = UIColor.opacity50TextColor
-        reviewsCount.font = UIFont.header3(weight: .regular)
+        
     }
     
     @IBAction func segmentControllChanged(_ sender: Any) {
@@ -161,30 +175,16 @@ class MovieDetailsViewController: UIViewController {
         case 0:
             synopsisView.isHidden = false
             castTableView.isHidden = false
-            reviewsTableView.isHidden = true
-            reviewsCount.isHidden = true
         case 1:
-            reviewsTableView.isHidden = false
             synopsisView.isHidden = true
             castTableView.isHidden = true
-            reviewsCount.isHidden = false
         default:
-            reviewsTableView.isHidden = true
             synopsisView.isHidden = true
             castTableView.isHidden = true
-            reviewsCount.isHidden = true
         }
     }
     
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     @objc func buttonAction(sender: UIButton!) {
         let btnsendtag: UIButton = sender
@@ -192,6 +192,15 @@ class MovieDetailsViewController: UIViewController {
             performSegue(withIdentifier: "toCastAndCrew", sender: nil)
         }
     }
+    
+    @IBAction func viewAllVieos(_ sender: Any) {
+        let movieDetailsSB = UIStoryboard(name: "MovieDetails", bundle: nil)
+        if let videosVC = movieDetailsSB.instantiateViewController(withIdentifier: "VideosViewController") as? VideosViewController {
+            videosVC.movieId = movieId
+            navigationController?.pushViewController(videosVC, animated: true)
+        }
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let castAndCrewVC = segue.destination as? CastAndCrewViewController, segue.identifier == "toCastAndCrew" {
