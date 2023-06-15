@@ -26,6 +26,7 @@ enum MoviesAPI {
             return "/movie/\(id)/credits"
         case let .reviews(id):
             return "/movie/\(id)/reviews"
+        
         }
     }
     //TODO: add logic to confirm query parameter

@@ -24,9 +24,6 @@ class VideosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //TODO: delete hardcode
-        movieId = "980078"
-        
         fetchVideos()
         setupTableView()
         
@@ -34,6 +31,7 @@ class VideosViewController: UIViewController {
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundColor = .clear
     }
     
     private func fetchVideos() {
